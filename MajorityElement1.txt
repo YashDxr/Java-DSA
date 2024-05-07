@@ -1,0 +1,46 @@
+// BRUTE:  TC- O(n^2)
+public int majorityElement(int[] nums) {
+    int max = 0;
+    for (int i = 0; i < nums.length; i++) {
+        int count = 0;
+        for (int j = 0; j < nums.length; j++) {
+            if (nums[i] == nums[j])
+                count++;
+        }
+        if (count > nums.length / 2) {
+            max = nums[i];
+        }
+
+    }
+    return max;
+}
+
+-----------------------------------------------------------------
+
+// Better: TC: O(nLogn)
+public int majorityElement(int[] nums) {
+    Arrays.sort(nums);
+    return nums[nums.length / 2];
+}
+
+-----------------------------------------------------------------
+
+// OPTIMAL - TC: O(n) SC:O(1)
+// MOORE's VOTING ALGORITHM
+public int majorityElement(int[] nums) {
+    int element = 0;
+    int count = 0;
+
+    for (int i = 0; i < nums.length; i++) {
+        if (count == 0) {
+            count = 1;
+            element = nums[i];
+        } else if (count > 0) {
+            if (nums[i] == element)
+                count++;
+            else
+                count--;
+        }
+    }
+    return element;
+}
