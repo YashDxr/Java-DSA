@@ -1,0 +1,46 @@
+BRUTE:    TC-O(2^n) SC: O(1)
+class Solution {
+    private int rec(int i , int j , int m , int n ){
+        if(i == (m-1) && j == (n-1)) return 1;
+        if(i >= m || j >= n) return 0;
+        else return rec(i+1,j,m,n) + rec(i,j+1,m,n);
+    }
+    public int uniquePaths(int m, int n) {
+        int i = 0 , j = 0;
+        int ans = rec(i,j,m,n);
+        return ans;
+    }
+}
+
+-----------------------------------------------------------------
+
+BETTER - Dynamic Programming   TC: O(nm)   SC(nm)
+class Solution {
+    private int rec(int i , int j , int m , int n , int[][] dp ){
+        if(i == (m-1) && j == (n-1)) return 1;
+        if(i >= m || j >= n) return 0;
+        if(dp[i][j] != 0) return dp[i][j];
+        else return dp[i][j] = rec(i+1,j,m,n,dp) + rec(i,j+1,m,n,dp);
+    }
+    public int uniquePaths(int m, int n) {
+        int[][] dp = new int[m][n];
+        int i = 0 , j = 0;
+        int ans = rec(i,j,m,n,dp);
+        return ans;
+    }
+}
+
+-----------------------------------------------------------------
+OPTMAL: TC:O(n), SC:O(1) 
+class Solution {
+    public int uniquePaths(int m, int n) {
+        int N = m+n-2;
+        int r = m-1;
+        double ans = 1;
+
+        for(int i = 1 ;i <= r ; i++){
+            ans = ans*(N-r+i)/i;
+        }
+        return (int)ans;
+    }
+}
